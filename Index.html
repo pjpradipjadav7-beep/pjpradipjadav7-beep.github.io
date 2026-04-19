@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Sonal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fff5f7;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+        .heart-bg {
+            background-image: url("https://www.transparenttextures.com/patterns/hearts.png");
+        }
+        /* Custom pulse for the meter */
+        .meter-glow {
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen text-center p-6 heart-bg">
+
+    <div id="page1" class="animate__animated animate__fadeIn">
+        <h1 class="text-3xl font-bold text-pink-500 mb-2">Hey Sonal, Cutiepie 🥰</h1>
+        <p class="text-xl text-gray-600 mb-8">Do you know how cute you are?</p>
+        <button onclick="startLoading()" class="bg-pink-400 hover:bg-pink-500 text-white font-bold py-4 px-10 rounded-full shadow-lg transform transition active:scale-95">
+            Let's Check
+        </button>
+    </div>
+
+    <div id="page2" class="hidden w-full max-w-xs flex-col items-center">
+        <p class="text-pink-500 font-bold text-lg mb-4 uppercase tracking-widest">Scanning Cuteness...</p>
+        
+        <div class="w-full bg-gray-200 rounded-full h-6 mb-4 overflow-hidden border-2 border-pink-200">
+            <div id="progressBar" class="bg-pink-500 h-full w-0 transition-all duration-75 ease-linear"></div>
+        </div>
+        
+        <div id="percentage" class="text-4xl font-black text-pink-600 mb-8">0%</div>
+
+        <div id="crashMessage" class="hidden animate__animated animate__headShake">
+            <div class="bg-red-50 border-2 border-red-500 p-4 rounded-xl mb-6">
+                <h1 class="text-2xl font-black text-red-600 mb-2">⚠️ SYSTEM CRASHED</h1>
+                <p class="text-lg font-bold text-gray-800">Error: Cuteness Overloaded!</p>
+            </div>
+            <button onclick="showApology()" class="bg-gray-800 text-white py-3 px-8 rounded-full font-bold shadow-lg animate__animated animate__pulse animate__infinite">
+                Continue
+            </button>
+        </div>
+    </div>
+
+    <div id="page3" class="hidden animate__animated animate__fadeInUp">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl border-2 border-pink-100 relative">
+            <div class="absolute -top-6 left-1/2 -translate-x-1/2 text-4xl">✨</div>
+            <p class="text-gray-700 text-xl leading-relaxed italic mb-6 font-semibold">
+                "Cute people are not allowed to stay upset for long..."
+            </p>
+            <p class="text-gray-600 mb-4">
+                I know I messed up... and I'm really sorry for that.
+            </p>
+            <h2 class="text-3xl font-bold text-pink-500 mb-6">Please forgive me.... 🥺</h2>
+            <div class="flex justify-center space-x-4 text-2xl">
+                <span>🌸</span><span>🌷</span><span>🎀</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startLoading() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+            document.getElementById('page2').classList.add('flex');
+
+            let percentElement = document.getElementById('percentage');
+            let barElement = document.getElementById('progressBar');
+            let count = 0;
+            
+            // Speed up the counter as it goes higher
+            let interval = setInterval(() => {
+                count += Math.floor(Math.random() * 15) + 5; // Random jumps for "realistic" loading
+                
+                if (count >= 999) {
+                    count = 999;
+                    clearInterval(interval);
+                    triggerCrash();
+                }
+                
+                percentElement.innerText = count + "%";
+                barElement.style.width = (count / 10) + "%"; // Scale bar to fit 0-100% visual
+            }, 40);
+        }
+
+        function triggerCrash() {
+            // Slight delay at 999% for dramatic effect
+            setTimeout(() => {
+                document.getElementById('percentage').classList.add('text-red-600', 'animate__animated', 'animate__flash');
+                document.getElementById('crashMessage').classList.remove('hidden');
+                
+                // Mobile vibration for the error
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate([200, 100, 200]);
+                }
+            }, 500);
+        }
+
+        function showApology() {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page2').classList.remove('flex');
+            document.getElementById('page3').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
